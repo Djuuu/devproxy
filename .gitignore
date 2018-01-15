@@ -1,0 +1,11 @@
+.env
+
+/certs/*
+/sites/*
+/vhosts/*
+
+!/certs/.gitignore
+!/sites/.gitignore
+!/vhosts/.gitignore
+
+!/vhosts/sample.dev

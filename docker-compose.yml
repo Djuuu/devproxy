@@ -13,8 +13,8 @@ services:
             - ./sites:/etc/nginx/conf.d
             - ./certs:/etc/nginx/certs
         networks:
-            - shared_default
+            - ffshared_default
 
 networks:
-  shared_default:
-    external: true
+    ffshared_default:
+        external: true
