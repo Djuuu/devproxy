@@ -12,9 +12,3 @@ services:
             - /var/run/docker.sock:/tmp/docker.sock:ro
             - ./sites:/etc/nginx/conf.d
             - ./certs:/etc/nginx/certs
-        networks:
-            - ffshared_default
-
-networks:
-    ffshared_default:
-        external: true

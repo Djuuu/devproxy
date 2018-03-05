@@ -9,3 +9,5 @@
 !/vhosts/.gitignore
 
 !/vhosts/sample.dev
+
+/docker-compose.override.yml

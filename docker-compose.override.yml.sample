@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+
+    nginx:
+        networks:
+            - toto
+
+networks:
+    toto:
+        external: true
