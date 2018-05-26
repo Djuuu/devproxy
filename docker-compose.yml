@@ -12,3 +12,5 @@ services:
             - /var/run/docker.sock:/tmp/docker.sock:ro
             - ./sites:/etc/nginx/conf.d
             - ./certs:/etc/nginx/certs
+            - ./Procfile:/app/Procfile
+            - ./www:/var/www

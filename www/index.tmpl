@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Nginx Proxy</title>
+    <style>
+        *, ::after, ::before {
+            box-sizing: border-box;
+        }
+        body {
+            text-align: center;
+            color: #333;
+            background-color: #FCFCFC;
+        }
+        h1 {
+            margin-bottom: 4rem;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            display: inline-block;
+            font-size: 1.2rem;
+        }
+        li {
+            text-align: left;
+            margin-bottom: -1px;
+            border: 1px solid rgba(0,0,0,.125);
+        }
+        li:first-child {
+            border-top-left-radius: .25rem;
+            border-top-right-radius: .25rem;
+        }
+        li:last-child {
+            margin-bottom: 0;
+            border-bottom-right-radius: .25rem;
+            border-bottom-left-radius: .25rem;
+        }
+        li a {
+            display: inline-block;
+            width: 100%;
+            padding: 1rem 2rem;
+            font-family: monospace;
+            font-size: 1.5rem;
+            color: #333;
+            text-decoration: none;
+        }
+        li a:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Nginx Proxy</h1>
+
+<ul>
+{{ range $host, $containers := groupByMulti $ "Env.VIRTUAL_HOST" "," }}
+
+    {{ $host := trim $host }}
+
+    {{ $https_method := or (first (groupByKeys $containers "Env.HTTPS_METHOD")) "redirect" }}  {{/* Get the HTTPS_METHOD defined by containers w/ the same vhost, falling back to "redirect" */}}
+    {{ $certName := (first (groupByKeys $containers "Env.CERT_NAME")) }}                       {{/* Get the first cert name defined by containers w/ the same vhost */}}
+    {{ $vhostCert := (closest (dir "/etc/nginx/certs") (printf "%s.crt" $host))}}              {{/* Get the best matching cert  by name for the vhost. */}}
+    {{ $vhostCert := trimSuffix ".crt" $vhostCert }}                                           {{/* vhostCert is actually a filename so remove any suffixes since they are added later */}}
+    {{ $vhostCert := trimSuffix ".key" $vhostCert }}
+    {{ $cert := (coalesce $certName $vhostCert) }}                                             {{/* Use the cert specified on the container or fallback to the best vhost match */}}
+
+    {{ $is_https := (and (ne $https_method "nohttps") (ne $cert "") (exists (printf "/etc/nginx/certs/%s.crt" $cert)) (exists (printf "/etc/nginx/certs/%s.key" $cert))) }}
+
+    <li>
+        <a href="http{{ if $is_https }}s{{ end }}://{{ $host }}" target="_blank">
+            http{{ if $is_https }}s{{ end }}://{{ $host }}
+        </a>
+    </li>
+{{ end }}
+</ul>
+
+</body>
+</html>
