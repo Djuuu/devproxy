@@ -24,21 +24,21 @@ NGINX_PROXY_CERT_PATH=./nginx-proxy/certs
 NGINX_PROXY_VHOSTS_PATH=./nginx-proxy/vhosts
 
 # nginx-proxy certificate name (vhosts TLD)
-NGINX_PROXY_CERT_NAME=dev
+NGINX_PROXY_CERT_NAME=docker
 ```
 
 * Configure your container hostnames in `.env`:
-  * `DOCKER_APP_VHOST=my-project.dev`
-  * `FF_PHPMYADMIN_VHOST=phpmyadmin.dev`
-  * `FF_MAILDEV_VHOST=maildev.dev`
+  * `DOCKER_APP_VHOST=my-project.docker`
+  * `ADMINER_VHOST=adminer.docker`
+  * `MAILDEV_VHOST=maildev.docker`
 
 
 * Map these hostnames in your `hosts` file (`/etc/hosts` or `\Windows\System32\drivers\etc\hosts`)
 
 ```
-127.0.0.1 phpmyadmin.dev
-127.0.0.1 maildev.dev
-127.0.0.1 my-project.dev
+127.0.0.1 adminer.docker
+127.0.0.1 maildev.docker
+127.0.0.1 my-project.docker
 ```
 
 * Start the *nginx-proxy* container with the provided wrapper script:
@@ -50,9 +50,9 @@ run.sh
 For convenience, *nginx-proxy* binds to the standard HTTP(S) port(s).
 
 You can then access your containers through the hostnames :
-* http://phpmyadmin.dev
-* http://maildev.dev
-* http://my-project.dev 
+* http://adminer.docker
+* http://maildev.docker
+* http://my-project.docker
 
 The proxy will be automatically reloaded when containers with configured hostnames are started or stopped.
  
@@ -61,7 +61,7 @@ The proxy will be automatically reloaded when containers with configured hostnam
 If you enable `NGINX_PROXY_GEN_CERT`, a SSL certificate will be generated in the `NGINX_PROXY_CERT_PATH` directory.
 
 The name of the certificate (`NGINX_PROXY_CERT_NAME`) should be related to your virtualhost names <br> 
-(the tld is enough, ie for `myapp.dev`, you can use `dev`) <br>
+(the tld is enough, ie for `myapp.docker`, you can use `docker`) <br>
 https://github.com/jwilder/nginx-proxy#ssl-support
 
 If there is a certificate corresponding to your hostname, the virtualhost will be configured to use HTTPS.  
