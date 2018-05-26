@@ -6,9 +6,7 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"
 # source environment file
 . ./.env
 
-# Create directories
-[ ! -d "${NGINX_PROXY_SITES_PATH}" ]  && mkdir -p ${NGINX_PROXY_SITES_PATH}
-[ ! -d "${NGINX_PROXY_VHOSTS_PATH}" ] && mkdir -p ${NGINX_PROXY_VHOSTS_PATH}
+# Create directory if necessary
 [ ! -d "${NGINX_PROXY_CERT_PATH}" ]   && mkdir -p ${NGINX_PROXY_CERT_PATH}
 
 # Generate SSL certificate

@@ -3,9 +3,18 @@ version: '3'
 services:
 
     nginx:
-        networks:
-            - toto
 
-networks:
-    toto:
-        external: true
+        # networks:
+        #     # Custom external network
+        #     - toto_network
+
+        # volumes:
+        #     # Custom proxy settings
+        #     - ./custom/proxy.conf:/etc/nginx/proxy.conf
+        #     # Store generated conf in a local volume
+        #     - ./sites:/etc/nginx/conf.d
+
+# networks:
+#     # Custom external network
+#     toto_network:
+#         external: true

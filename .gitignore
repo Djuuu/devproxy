@@ -1,13 +1,2 @@
 .env
-
-/certs/*
-/sites/*
-/vhosts/*
-
-!/certs/.gitignore
-!/sites/.gitignore
-!/vhosts/.gitignore
-
-!/vhosts/sample.docker
-
-/docker-compose.override.yml
+docker-compose.override.yml

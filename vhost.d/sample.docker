@@ -1,3 +1,7 @@
+#
+# Custom configuration for sample.docker host
+# (file name must match host name)
+#
 
 proxy_set_header X-Forwarded-Proto https;
 

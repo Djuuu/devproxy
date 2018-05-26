@@ -4,24 +4,23 @@ Working on multiple docker applications on different ports can become confusing 
 
 [jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy) allows access to multiple containers through different hostnames on the same HTTP(S) port.
 
-A wrapper script (`run.sh`) and a dedicated docker-compose file (`docker-compose.yml`) are included.
+This project provides a template to get you started using this tool, with:
+* A wrapper script (`run.sh`)
+* A docker-compose file (`docker-compose.yml`)
+* A script to generate certificates (automatically called by `run.sh`)
+* A custom virtualhost configuration sample
+* An index page listing all currently proxied containers as a default virtual host
 
 ## Nginx-proxy usage
 
 * Configure `NGINX_PROXY_` variables in `.env`
 
 ```dotenv
-# Generate certificate for nginx-proxy (needs openssl)
+# Generate certificate for nginx-proxy (needs openssl on your host)
 NGINX_PROXY_GEN_CERT=true
 
-# nginx-proxy sites path (relative to this directory, or absolute)
-NGINX_PROXY_SITES_PATH=./nginx-proxy/sites
-
-# nginx-proxy certificates path (relative to this directory, or absolute)
+# nginx-proxy certificates path
 NGINX_PROXY_CERT_PATH=./nginx-proxy/certs
-
-# nginx-proxy vhost-specific configuration files path (relative to this directory, or absolute)
-NGINX_PROXY_VHOSTS_PATH=./nginx-proxy/vhosts
 
 # nginx-proxy certificate name (vhosts TLD)
 NGINX_PROXY_CERT_NAME=docker
@@ -43,13 +42,13 @@ services:
       - VIRTUAL_HOST=my-project.docker
 ```
 
-* Map these hostnames in your `hosts` file (`/etc/hosts` or `\Windows\System32\drivers\etc\hosts`)
+* Map these hostnames in your `hosts` file (`/etc/hosts` or `%WinDir%\System32\drivers\etc\hosts`)
 
 ```
 127.0.0.1 my-project.docker
 ```
 
-Note: with Docker Toolbox, you should use the Docker machine ip. You can find it with `docker-machine ip`
+*Note: with Docker Toolbox, you should use the Docker machine IP. You can find it with `docker-machine ip`*
 
 * Start the *nginx-proxy* container with the provided wrapper script:
 

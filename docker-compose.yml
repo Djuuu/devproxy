@@ -10,7 +10,14 @@ services:
             - "443:443"
         volumes:
             - /var/run/docker.sock:/tmp/docker.sock:ro
-            - ./sites:/etc/nginx/conf.d
+
+            # SSL/TLS certificates
             - ./certs:/etc/nginx/certs
-            - ./Procfile:/app/Procfile
-            - ./www:/var/www
+
+            # Custom virtualhost configurations
+            - ./vhost.d:/etc/nginx/vhost.d
+
+            # Custom add-ons for index page
+            - ./custom/index.conf:/etc/nginx/conf.d/index.conf
+            - ./custom/index.tmpl:/app/index.tmpl
+            - ./custom/Procfile:/app/Procfile
